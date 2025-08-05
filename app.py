@@ -31,10 +31,10 @@ class AircraftData(db.Model):
     vertical_rate = db.Column(db.Float)
    # sensors = db.Column(db.String(200))
     geo_altitude = db.Column(db.Float)
-    squawk = db.Column(db.String(10))
+   # squawk = db.Column(db.String(10))
     spi = db.Column(db.Boolean)
     position_source = db.Column(db.Integer)
-    category = db.Column(db.Integer)
+   # category = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 # Cache for Render fallback
@@ -115,4 +115,5 @@ def get_aircrafts():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
