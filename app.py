@@ -29,13 +29,10 @@ class AircraftData(db.Model):
     velocity = db.Column(db.Float)
     true_track = db.Column(db.Float)
     vertical_rate = db.Column(db.Float)
-    # sensors = db.Column(db.String(200))  # commented out - not in DB
     geo_altitude = db.Column(db.Float)
-    # squawk = db.Column(db.String(10))  # commented out - not in DB
     spi = db.Column(db.Boolean)
     position_source = db.Column(db.Integer)
-    # category = db.Column(db.Integer)  # commented out - not in DB
-   # timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # ✅ keep this enabled
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # ✅ ENABLED
 
 # Cache for Render fallback
 last_fallback_fetch = 0
@@ -55,17 +52,20 @@ def get_aircrafts():
         response.raise_for_status()
         data = response.json()
 
-        aircrafts = [{
-            'icao24': state[0],
-            'callsign': state[1],
-            'origin_country': state[2],
-            'longitude': state[5],
-            'latitude': state[6],
-            'baro_altitude': state[7],
-            'geo_altitude': state[13],
-            'velocity': state[9],
-            'on_ground': state[8]
-        } for state in data.get("states", [])[:10]]
+        aircrafts = [  # Only first 10 entries
+            {
+                'icao24': state[0],
+                'callsign': state[1],
+                'origin_country': state[2],
+                'longitude': state[5],
+                'latitude': state[6],
+                'baro_altitude': state[7],
+                'geo_altitude': state[13],
+                'velocity': state[9],
+                'on_ground': state[8]
+            }
+            for state in data.get("states", [])[:10]
+        ]
 
         return jsonify({'source': 'opensky', 'aircrafts': aircrafts})
 
@@ -91,7 +91,7 @@ def get_aircrafts():
 
             # 3. 📦 Try to fetch from your PostgreSQL database
             try:
-              #  db_aircrafts = AircraftData.query.order_by(AircraftData.timestamp.desc()).limit(10).all()
+                db_aircrafts = AircraftData.query.order_by(AircraftData.timestamp.desc()).limit(10).all()
                 db_data = [{
                     'icao24': ac.icao24,
                     'callsign': ac.callsign,
@@ -101,7 +101,8 @@ def get_aircrafts():
                     'baro_altitude': ac.baro_altitude,
                     'geo_altitude': ac.geo_altitude,
                     'velocity': ac.velocity,
-                    'on_ground': ac.on_ground
+                    'on_ground': ac.on_ground,
+                    'timestamp': ac.timestamp.isoformat() if ac.timestamp else None
                 } for ac in db_aircrafts]
 
                 return jsonify({'source': 'database-backup', 'aircrafts': db_data})
@@ -115,5 +116,3 @@ def get_aircrafts():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
