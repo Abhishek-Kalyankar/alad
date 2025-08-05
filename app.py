@@ -29,7 +29,7 @@ class AircraftData(db.Model):
     velocity = db.Column(db.Float)
     true_track = db.Column(db.Float)
     vertical_rate = db.Column(db.Float)
-    sensors = db.Column(db.String(200))
+   # sensors = db.Column(db.String(200))
     geo_altitude = db.Column(db.Float)
     squawk = db.Column(db.String(10))
     spi = db.Column(db.Boolean)
@@ -115,3 +115,4 @@ def get_aircrafts():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
