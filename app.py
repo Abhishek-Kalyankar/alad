@@ -91,7 +91,7 @@ def get_aircrafts():
 
             # 3. 📦 Try to fetch from your PostgreSQL database
             try:
-                db_aircrafts = AircraftData.query.order_by(AircraftData.timestamp.desc()).limit(10).all()
+              #  db_aircrafts = AircraftData.query.order_by(AircraftData.timestamp.desc()).limit(10).all()
                 db_data = [{
                     'icao24': ac.icao24,
                     'callsign': ac.callsign,
@@ -115,4 +115,5 @@ def get_aircrafts():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
