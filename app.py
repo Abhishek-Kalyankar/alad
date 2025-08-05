@@ -35,7 +35,7 @@ class AircraftData(db.Model):
     spi = db.Column(db.Boolean)
     position_source = db.Column(db.Integer)
     # category = db.Column(db.Integer)  # commented out - not in DB
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # ✅ keep this enabled
+   # timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # ✅ keep this enabled
 
 # Cache for Render fallback
 last_fallback_fetch = 0
@@ -115,3 +115,4 @@ def get_aircrafts():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
