@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
-
+CORS(app)
 # PostgreSQL config
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://aircraft_data_user:6PZIW63RoeCj5cthsEPTZaCeSZm2ZQEQ@dpg-d1t092emcj7s73b0mhlg-a.oregon-postgres.render.com/aircraft_data"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -117,3 +118,4 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
