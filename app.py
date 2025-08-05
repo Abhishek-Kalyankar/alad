@@ -29,13 +29,13 @@ class AircraftData(db.Model):
     velocity = db.Column(db.Float)
     true_track = db.Column(db.Float)
     vertical_rate = db.Column(db.Float)
-   # sensors = db.Column(db.String(200))
+    # sensors = db.Column(db.String(200))  # commented out - not in DB
     geo_altitude = db.Column(db.Float)
-   # squawk = db.Column(db.String(10))
+    # squawk = db.Column(db.String(10))  # commented out - not in DB
     spi = db.Column(db.Boolean)
     position_source = db.Column(db.Integer)
-   # category = db.Column(db.Integer)
-  #  timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    # category = db.Column(db.Integer)  # commented out - not in DB
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # ✅ keep this enabled
 
 # Cache for Render fallback
 last_fallback_fetch = 0
@@ -115,6 +115,3 @@ def get_aircrafts():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
